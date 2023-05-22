@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Portal de Noticias</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: blue;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+            width: 80%;
+        }
+
+        th,
+        td {
+            border: 1px solid blue;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: blue;
+            color: white;
+        }
+
+        .btn {
+            background-color: blue;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn-modificar {
+            background-color: green;
+        }
+
+        .btn-borrar {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar bg-primary" data-bs-theme="dark">
+        <div class="container-fluid">
+          <h2>Página de noticias</h2>
+          <a href="../noticias/registrar" class="btn">Crear Noticia</a>
+          <a href="../" class="btn" >Volver a la pagina principal</a>
+        </div>
+      </nav>
+   
+
+    <h1>Noticias</h1>
+
+    <table>
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Cuerpo</th>
+            <th colspan="2">Acciones</th>
+          </tr>
+        </thead>
+        <tbody th:each="noticia: ${noticias}">
+          <!-- Aquí se generan las filas de la tabla dinámicamente -->
+          <tr>
+              <td th:text="${noticia.titulo}"></td>
+              <td th:text="${noticia.cuerpo}"></td>
+              <td>
+                <a th:href="@{/noticias/modificar/__${noticia.id}__}"><button class="btn btn-modificar">Modificar</button></a>
+              </td>
+              <td>
+                <form th:action="@{/noticias/borrar/{id}(id=${noticia.id})}" method="post">
+                  <button type="submit" class="btn btn-borrar">Borrar</button>
+                  <input type="hidden" name="_method" value="DELETE">
+                </form>
+              </td>
+              
+            </tr>
+          
+        </tbody>
+      </table>
+</body>
+
+</html>
