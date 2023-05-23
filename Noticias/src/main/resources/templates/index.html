@@ -30,20 +30,21 @@
   </style>
 </head>
 
-<body>
-  <nav class="navbar bg-primary" data-bs-theme="dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="../">Página de noticias</a>
-    </div>
-  </nav>
-  <h1 class="mb-2 mt-2">Este es el index!</h1>
-  <p class="mb-2 mt-2" style="font-size: large;">El contenido de texto sirve para explicar la funcionalidad de la
-    página.</p>
+<nav class="navbar bg-primary" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="../">Página de noticias</a>
+    <!-- Verificación condicional para mostrar el mensaje y el enlace solo si el usuario ha iniciado sesión -->
+    <p th:if="${#httpServletRequest.userPrincipal != null}">Has iniciado sesión correctamente. <a href="/logout">Cerrar sesión</a></p>
+    <!-- Enlace para iniciar sesión si el usuario no ha iniciado sesión -->
+    <a th:unless="${#httpServletRequest.userPrincipal != null}" href="/login">Iniciar sesión</a>
+  </div>
+</nav>
+<h1 class="mb-2 mt-2">Este es el index!</h1>
+<p class="mb-2 mt-2" style="font-size: large;">El contenido de texto sirve para explicar la funcionalidad de la página.</p>
 
-  <a href="http://localhost:8080/noticias/registrar" class="btn btn-primary mb-2 mt-2"> Crear una noticia </a>
+<a href="http://localhost:8080/noticias/registrar" class="btn btn-primary mb-2 mt-2">Crear una noticia</a>
 
-  <a href="http://localhost:8080/noticias/listado" class="btn btn-primary mb-2 mt-2"> Ver listado de noticias</a>
-
+<a href="http://localhost:8080/noticias/listado" class="btn btn-primary mb-2 mt-2">Ver listado de noticias</a>
   <!-- Este es el contenedor de las cartas -->
   <div class="card-container">
     <!-- Código de la carta -->
