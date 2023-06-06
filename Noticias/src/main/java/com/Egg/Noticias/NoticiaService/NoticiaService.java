@@ -67,10 +67,10 @@ public class NoticiaService {
     
     public void validar(String titulo, String cuerpo) throws MyException{
         if (titulo.isEmpty() || titulo == null) {
-            throw new MyException("el tiutlo no puede ser nulo o estar vacio");
+            throw new MyException("El título no puede ser nulo o estar vacio");
         }
         if (cuerpo.isEmpty() || cuerpo == null) {
-            throw new MyException("el cuerpo no puede ser nulo o estar vacio");
+            throw new MyException("El cuerpo no puede ser nulo o estar vacio");
         }
     }
 }

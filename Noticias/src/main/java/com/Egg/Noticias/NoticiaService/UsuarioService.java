@@ -67,7 +67,7 @@ public class UsuarioService implements UserDetailsService {
 
         if (email.isEmpty()) {
             throw new ValidationException("El email no puede estar vacío");
-        }
+        } 
 
         if (password.length() <= 5) {
             throw new ValidationException("La contraseña debe tener más de 5 dígitos");

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
- * @author siduncuNotebook
+ * @author lukaku
  */
 @Controller
 @RequestMapping("/")
@@ -39,6 +40,13 @@ public class PortalControlador {
         List<Noticia> noticias = notiServi.listaDeNoticias();
         model.addAttribute("noticias", noticias);
         return "index.html";
+    }
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @GetMapping("/inicio")
+    public String inicio(ModelMap model) {
+        List<Noticia> noticias = notiServi.listaDeNoticias();
+        model.addAttribute("noticias", noticias);
+        return "inicio.html";
     }
 
     @GetMapping("/registrar")

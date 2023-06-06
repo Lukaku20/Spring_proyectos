@@ -32,7 +32,8 @@
 
 <nav class="navbar bg-primary" data-bs-theme="dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="../">Página de noticias</a>
+    <p  th:if="${#httpServletRequest.userPrincipal != null}"><a class="navbar-brand" href="/inicio">Página de noticias</a>
+        <a th:unless="${#httpServletRequest.userPrincipal != null}" class="navbar-brand" href="/">Página de noticias</a></p>
     <!-- Verificación condicional para mostrar el mensaje y el enlace solo si el usuario ha iniciado sesión -->
     <p th:if="${#httpServletRequest.userPrincipal != null}">Has iniciado sesión correctamente. <a href="/logout">Cerrar sesión</a></p>
     <!-- Enlace para iniciar sesión si el usuario no ha iniciado sesión -->
@@ -40,15 +41,16 @@
     <a th:unless="${#httpServletRequest.userPrincipal != null}" href="/login">Iniciar sesión</a>
   </div>
 </nav>
-<h1 class="mb-2 mt-2">Este es el index!</h1>
-<p class="mb-2 mt-2" style="font-size: large;">El texto sirve para explicar la funcionalidad de la página.</p>
-<ol class="mb-2 mt-2"> El usuario que observa esta página
-  <li> aun no se registro.</li> 
-  <li> no puede ingresar a modificar listado de noticias.</li> 
-  <li> no puede crear noticias.</li> 
-  <li>pero puede ver las noticias creadas hasta el momento y leerlas en 'VER MAS'.</li> 
+<h1 class="mb-2 mt-2">Aquí ingresamos al inicio!</h1>
+<p class="mb-2 mt-2" style="font-size: large;">El contenido de texto sirve para explicar la funcionalidad de la página.</p>
+<ol class="mb-2 mt-2"> En el iniicio el usuario puede:
+    <li> observar el listado de noticias.</li>
+    <li> ingresar al listado y modificar o borrar.</li>
+    <li> crear una nueva noticia.</li>
 </ol> 
+<a href="http://localhost:8080/noticias/registrar" class="btn btn-primary mb-2 mt-2">Crear una noticia</a>
 
+<a href="http://localhost:8080/noticias/listado" class="btn btn-primary mb-2 mt-2">Ver listado de noticias</a>
   <!-- Este es el contenedor de las cartas -->
   <div class="card-container">
     <!-- Código de la carta -->
@@ -60,5 +62,14 @@
       </div>
     </div>
   </div>
+
+  <!--Este es el ´div´ de exito al cargar la noticia-->
+  <div th:if="${exito!=null}" class="card bg-primary mb-2 mt-2">
+    <h5 class="card-header">Exito!</h5>
+    <div class="card-body">
+      <p th:text="${exito}" class="card-text"></p>
+    </div>
+  </div>
+</body>
 
 </html>

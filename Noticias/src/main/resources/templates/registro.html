@@ -4,7 +4,85 @@
     <title>Registrar</title>
 </head>
 <body>
-    <h1>Registrar</h1>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Registrar</title>
+        <link rel="stylesheet" href="../templates/index.css">
+        <style>
+            body {
+                background-color: #f2f2f2;
+                font-family: Arial, sans-serif;
+            }
+            
+            .navbar {
+                background-color: #000;
+                color: #fff;
+                padding: 10px;
+            }
+            
+            .navbar a {
+                color: #fff;
+                text-decoration: none;
+                margin-right: 10px;
+            }
+            
+            h1 {
+                color: #333;
+                text-align: center;
+                margin: 20px 0;
+            }
+            
+            form {
+                max-width: 300px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            
+            label {
+                display: block;
+                margin-bottom: 10px;
+            }
+            
+            input[type="text"],
+            input[type="email"],
+            input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            
+            input[type="submit"] {
+                width: 100%;
+                padding: 10px;
+                background-color: #337ab7;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            
+            input[type="submit"]:hover {
+                background-color: #23527c;
+            }
+        </style>
+    </head>
+    <h1>Registrarse</h1>
+
+    <body>
+        <header>
+            <nav class="navbar bg-primary" data-bs-theme="dark">
+                <div class="container-fluid">
+                    <a href="/" class="btn" >Volver a la página principal</a>
+                    <a th:unless="${#httpServletRequest.userPrincipal != null}" href="/login">Iniciar sesión</a>
+                </div>
+            </nav>
+        </header>
+    
     <form action="/registrar" method="POST">
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre">

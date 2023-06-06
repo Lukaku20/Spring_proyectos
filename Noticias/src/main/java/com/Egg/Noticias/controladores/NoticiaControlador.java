@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * @author
+ * @author lukaku
  */
 @Controller
 @RequestMapping("/noticias")//localhost:8080/noticias
@@ -60,6 +60,7 @@ public class NoticiaControlador {
     }
 
     @PostMapping("/modificar/{id}")
+    @PreAuthorize("hasRole('USER')")
     public String modifico(@PathVariable String id, @RequestParam String titulo, @RequestParam String cuerpo, ModelMap model) {
         try {
             notiServi.modificarNoticia(id, titulo, cuerpo);
@@ -81,6 +82,13 @@ public class NoticiaControlador {
         } catch (Exception e) {
             return "redirect:../listado";
         }
-        
+
+    }
+
+    @GetMapping("/ver_noti/{id}")
+    public String verNoticia(ModelMap model, @PathVariable String id) {
+        Noticia noticia = notiServi.getOne(id);
+        model.put("noticia", noticia);
+        return "ver.html";
     }
 }
