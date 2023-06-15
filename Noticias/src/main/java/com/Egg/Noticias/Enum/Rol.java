@@ -6,6 +6,7 @@ package com.Egg.Noticias.Enum;
  */
 public enum Rol {
     ADMIN,
+    PERIODISTA,
     USER;
     
 }

@@ -2,6 +2,8 @@
 package com.Egg.Noticias.NoticiaService;
 
 import com.Egg.Noticias.entidad.Noticia;
+import com.Egg.Noticias.entidad.Periodista;
+import com.Egg.Noticias.entidad.Usuario;
 import com.Egg.Noticias.excepciones.MyException;
 import com.Egg.Noticias.repositorios.NoticiaRepositorio;
 import java.util.ArrayList;
@@ -21,12 +23,13 @@ public class NoticiaService {
     private NoticiaRepositorio notiRepo;
     
     @Transactional
-    public void crearNoticia(String titulo, String cuerpo) throws MyException{
+    public void crearNoticia(String titulo, String cuerpo, Usuario creador) throws MyException{
         validar(titulo, cuerpo);
         Noticia noti = new Noticia();
         noti.setTitulo(titulo);
         noti.setCuerpo(cuerpo);
-//        noti.setFecha(new Date());
+        noti.setFecha(new Date());
+        noti.setCreador(creador);
         notiRepo.save(noti);
     }
     
@@ -72,5 +75,6 @@ public class NoticiaService {
         if (cuerpo.isEmpty() || cuerpo == null) {
             throw new MyException("El cuerpo no puede ser nulo o estar vacio");
         }
+        
     }
 }

@@ -8,6 +8,7 @@ import com.Egg.Noticias.excepciones.MyException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.xml.bind.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -41,11 +43,15 @@ public class PortalControlador {
         model.addAttribute("noticias", noticias);
         return "index.html";
     }
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_PERIODISTA', 'ROLE_ADMIN')")
     @GetMapping("/inicio")
-    public String inicio(ModelMap model) {
+    public String inicio(ModelMap model, HttpSession session) {
         List<Noticia> noticias = notiServi.listaDeNoticias();
         model.addAttribute("noticias", noticias);
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+//        if(logueado.getRol().toString().equals("ADMIN")){
+//            return "redirect:/admin/dashbord";
+//        }
         return "inicio.html";
     }
 
@@ -58,9 +64,10 @@ public class PortalControlador {
     public String registrar(@RequestParam("nombre") String nombre,
             @RequestParam("email") String email,
             @RequestParam("password") String password,
-            @RequestParam("password2") String password2) {
+            @RequestParam("password2") String password2,
+            MultipartFile imagen) {
         try {
-            usuarioService.registrar(nombre, email, password, password2);
+            usuarioService.registrar(imagen, nombre, email, password, password2);
             // Registro exitoso, redirigir a la página de inicio de sesión
             return "redirect:/login";
         } catch (MyException | ValidationException e) {

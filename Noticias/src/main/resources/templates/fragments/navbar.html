@@ -1,0 +1,11 @@
+<nav class="navbar bg-primary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <p  th:if="${#httpServletRequest.userPrincipal != null}"><a class="navbar-brand" href="/inicio">Página de noticias</a>
+          <a th:unless="${#httpServletRequest.userPrincipal != null}" class="navbar-brand" href="/">Página de noticias</a></p>
+      <!-- Verificación condicional para mostrar el mensaje y el enlace solo si el usuario ha iniciado sesión -->
+      <p th:if="${#httpServletRequest.userPrincipal != null}">Has iniciado sesión correctamente. <a href="/logout">Cerrar sesión</a></p>
+      <!-- Enlace para iniciar sesión si el usuario no ha iniciado sesión -->
+      <a th:unless="${#httpServletRequest.userPrincipal != null}" href="/registrar">Registrarse</a>
+      <a th:unless="${#httpServletRequest.userPrincipal != null}" href="/login">Iniciar sesión</a>
+    </div>
+  </nav>

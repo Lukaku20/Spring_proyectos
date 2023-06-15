@@ -1,12 +1,15 @@
 package com.Egg.Noticias.controladores;
 
 import com.Egg.Noticias.NoticiaService.NoticiaService;
+import com.Egg.Noticias.NoticiaService.UsuarioService;
 import com.Egg.Noticias.entidad.Noticia;
+import com.Egg.Noticias.entidad.Usuario;
 import com.Egg.Noticias.excepciones.MyException;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -26,7 +29,8 @@ public class NoticiaControlador {
 
     @Autowired
     private NoticiaService notiServi;
-
+    @Autowired
+    private UsuarioService userServi;
     @GetMapping("/registrar") //localhost:8080/noticias/registrar
     public String cargar() {
         return "formulario_noticia.html";
@@ -34,10 +38,15 @@ public class NoticiaControlador {
     // @RequestParam Date fecha
 
     @PostMapping("/registro") //localhost:8080/noticias/registro
-    @PreAuthorize("hasRole('USER')")
-    public String registro(@RequestParam String titulo, @RequestParam String cuerpo, ModelMap model) {
+    @PreAuthorize("hasAnyRole('PERIODISTA', 'ADMIN')")
+    public String registro(@RequestParam String titulo, @RequestParam String cuerpo, ModelMap model, HttpSession session) {
         try {
-            notiServi.crearNoticia(titulo, cuerpo);
+            List<Usuario> usuarios = userServi.listarUsuarios();
+
+            model.addAttribute("usuarios", usuarios);
+            Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+            System.out.println(logueado.getNombreUsuario());
+            notiServi.crearNoticia(titulo, cuerpo, logueado);
             model.put("exito", "La noticia se guardó con éxito");
         } catch (MyException ex) {
             model.put("error", ex.getMessage());

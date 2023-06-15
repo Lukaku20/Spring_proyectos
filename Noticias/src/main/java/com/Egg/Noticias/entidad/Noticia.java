@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,10 +31,10 @@ public class Noticia implements Serializable {
     private String titulo;
     @Column(name = "cuerpo")
     private String cuerpo;
-//    @Temporal(TemporalType.DATE)
-//    private Date fecha;
-    //@Column(name = "periodista")
-    //private Periodista creador;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecha;
+    @ManyToOne
+    private Usuario creador;
 
     public Noticia() {
     }
@@ -67,13 +68,21 @@ public class Noticia implements Serializable {
         this.cuerpo = cuerpo;
     }
 
-//    public Date getFecha() {
-//        return fecha;
-//    }
-//
-//    public void setFecha(Date fecha) {
-//        this.fecha = fecha;
-//    }
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Usuario getCreador() {
+        return creador;
+    }
+
+    public void setCreador(Usuario creador) {
+        this.creador = creador;
+    }
 
    
 }

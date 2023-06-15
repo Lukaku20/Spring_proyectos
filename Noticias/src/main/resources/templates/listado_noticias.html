@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -69,7 +69,7 @@
         <div class="container-fluid">
           <h2>Página de noticias</h2>
           <a href="../noticias/registrar" class="btn">Crear Noticia</a>
-          <a href="../" class="btn" >Volver a la pagina principal</a>
+          <a href="../inicio" class="btn" >Volver a la pagina principal</a>
         </div>
       </nav>
    
@@ -93,7 +93,7 @@
                 <a th:href="@{/noticias/modificar/__${noticia.id}__}"><button class="btn btn-modificar">Modificar</button></a>
               </td>
               <td>
-                <form th:action="@{/noticias/borrar/{id}(id=${noticia.id})}" method="post">
+                <form th:action="@{/noticias/borrar/{id}(id=${noticia.id})}" method="post" sec:authorize="hasRole('ADMIN')">
                   <button type="submit" class="btn btn-borrar">Borrar</button>
                   <input type="hidden" name="_method" value="DELETE">
                 </form>

@@ -1,27 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <!-- Aquí van los encabezados, estilos, etc. -->
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La noticia</title>
-
-</head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- Aquí van los encabezados, estilos, etc. -->
+<th:head th:replace= "/fragments/head :: head"> </th:head>
+  
 <body>
     <header>
         <nav class="navbar bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
                 <h2 th:text="${noticia.titulo}"></h2>
+                <p>Fecha de creación: <span th:text="${#dates.format(noticia.fecha, 'dd/MM/yyyy')}"></span></p>
+                <p>Periodista: <span th:text="${noticia.creador.nombreUsuario}"></span></p>
             </div>
             <!-- Verificación condicional para mostrar el mensaje y el enlace solo si el usuario ha iniciado sesión -->
-    <p th:if="${#httpServletRequest.userPrincipal != null}"><a href="/inicio" class="btn" >Volver a la pagina principal</a></p>
-    <!-- Enlace para iniciar sesión si el usuario no ha iniciado sesión -->
-    <a th:unless="${#httpServletRequest.userPrincipal != null}" href="/">Volver a pagina principal</a>
+   
             
         </nav>
     </header>
     <div><p th:text="${noticia.cuerpo}"></p></div>    
-    
+    <footer> <p th:if="${#httpServletRequest.userPrincipal != null}"><a href="/inicio" class="btn" >Volver a la pagina principal</a></p>
+        <!-- Enlace para iniciar sesión si el usuario no ha iniciado sesión -->
+        <a th:unless="${#httpServletRequest.userPrincipal != null}" href="/">Volver a pagina principal</a></footer>
 </body>
 </html>

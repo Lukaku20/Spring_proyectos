@@ -11,7 +11,7 @@ import javax.persistence.Table;
  * @author lukaku
  */
 @Entity
-@Table(name="periodista")
+@Table(name="periodistas")
 public class Periodista extends Usuario{
 
     private ArrayList<Noticia> misNoticias;

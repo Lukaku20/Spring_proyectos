@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <th:block th:replace= "/fragments/head :: head"> </th:block>
+<body>
+    <nav th:replace= "/fragments/navbar :: nav"> </nav>
+
+    <table class="table table-dark">
+        <thead class="align-items-center">
+            <tr >
+                <th scope="col">Id del Usuario</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Rol</th>
+                <th scope="col">Cambiar Rol</th>
+                <th scope="col">Modificar</th>
+
+            </tr>
+        </thead>
+        <tbody th:each="usuario : ${usuarios}"> 
+            <tr>
+                <th scope="row" th:text="${usuario.id}"></th>
+                <td th:text="${usuario.nombreUsuario}"></td>
+
+                <td th:text="${usuario.rol}"></td>
+
+                <td>
+                    <form th:action="@{/admin/modificarRol/__${usuario.id}__}" method="post">
+                      <div>
+                        <select name="rol">
+                          <option value="USER" th:selected="${usuario.rol == 'USER'}">USER</option>
+                          <option value="PERIODISTA" th:selected="${usuario.rol == 'PERIODISTA'}">PERIODISTA</option>
+                          <option value="ADMIN" th:selected="${usuario.rol == 'ADMINISTRADOR'}">ADMINISTRADOR</option>
+                        </select>
+                      </div>
+                      <button type="submit">Cambiar</button>
+                    </form>
+                  </td>
+
+                <td>
+                    <!-- <a th:href= "@{/usuario/modificar/__${usuario.id}__}"><i class="fas fa-feather-alt"></i> Modificar</a> -->
+                </td>
+
+            </tr>
+
+        </tbody>
+    </table>
+
+</body>
+
+</html>
